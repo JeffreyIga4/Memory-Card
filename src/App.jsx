@@ -4,7 +4,7 @@ import { GamerHeader } from "./components/GameHeader";
 function App() {
   return  (
   <div className="app">
-    <GamerHeader/>
+    <GamerHeader score={3} moves={10}/>
     </div>
   );
 }
