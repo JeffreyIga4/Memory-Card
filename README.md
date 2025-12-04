@@ -1,3 +1,36 @@
+# Memory Card Game
+
+A simple and fun memory-matching game built with React.  
+Your goal: **flip cards, remember their positions, and match all pairs.**
+
+---
+
+## How to Play
+- The game displays a grid of 16 cards (8 pairs).
+- Click any card to flip it.
+- Flip another card:
+  - If both cards match → they stay revealed.
+  - If they don't match → they flip back over.
+- Keep going until all pairs are matched.
+- Your **Score** and **Moves** update as you play.
+
+---
+
+## Tech Stack
+- **React** (with Vite)
+- **CSS** for layout & animations
+- **useState / useEffect** for game logic
+
+---
+
+## Run the Game Locally
+```bash
+npm install
+npm run dev
+```
+
+---
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
