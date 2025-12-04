@@ -30,6 +30,7 @@ function App() {
   const [matchedCards, setMatchedCards] = useState([]);
   const [score, setScore] = useState(0);
   const [moves, setMoves] = useState(0);
+  const [isLocked, setIsLocked] = useState(false);
 
   // keeps track of what happens when the game starts
   const initializeGame = () => {
@@ -45,6 +46,10 @@ function App() {
 
       // called the user open the game with the new set of cards
       setCards(finalCards)
+      setMoves(0);
+      setScore(0);
+      setFlippedCards([]);
+      setMatchedCards([]);
   };
 
   // 
@@ -54,7 +59,7 @@ function App() {
 
   const handleCardClick = (card) => {
     // Dont allow clicking if the card is already flipped or matched
-    if (card.isFlipped || card.isMatched) {
+    if (card.isFlipped || card.isMatched || isLocked || flippedCards.length === 2) {
       return;
     }
 
@@ -75,6 +80,7 @@ function App() {
 
     // check for a match if two cards are flipped
     if (flippedCards.length === 1) {
+      setIsLocked(true);
       const firstCard = cards[flippedCards[0]];
 
       if (firstCard.value === card.value) {
@@ -93,6 +99,7 @@ function App() {
           })
         );
         setFlippedCards([]);
+        setIsLocked(false);
       }, 500);
       } else {
         //flip back card 1, card 2
@@ -110,6 +117,7 @@ function App() {
 
         setCards(flippedBackCard)
         setFlippedCards([]);
+        setIsLocked(false);
         }, 1000)
       }
       setMoves((prev) => prev + 1);
@@ -118,7 +126,7 @@ function App() {
 
   return  (
   <div className="app">
-    <GamerHeader score={score} moves={moves}/>
+    <GamerHeader score={score} moves={moves} onReset={initializeGame}/>
 
     <div className="cards-grid">
       {cards.map((card) => (
