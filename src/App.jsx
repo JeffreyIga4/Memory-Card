@@ -32,11 +32,21 @@ function App() {
   const [moves, setMoves] = useState(0);
   const [isLocked, setIsLocked] = useState(false);
 
+ const shuffleArray = (array) => {
+    const shuffledarray = [...array];
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffledarray[i], shuffledarray[j]] = [shuffledarray[j], shuffledarray[i]];
+    }
+    return shuffledarray;
+  };
+
   // keeps track of what happens when the game starts
   const initializeGame = () => {
+    const shuffledCards = shuffleArray(cardValues);
     
     // loop through the card values and create a card object for each value
-    const finalCards =cardValues.map((value, index) =>(
+    const finalCards = shuffledCards.map((value, index) =>(
       {
         id: index,
         value,
@@ -46,6 +56,7 @@ function App() {
 
       // called the user open the game with the new set of cards
       setCards(finalCards)
+      setIsLocked(false);
       setMoves(0);
       setScore(0);
       setFlippedCards([]);
