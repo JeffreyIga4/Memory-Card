@@ -26,6 +26,7 @@ const cardValues = [
 function App() {
   // keeps track of the cards in the game
   const [cards, setCards] = useState([])
+  const [flippedCards, setFlippedCards] = useState([]);
 
   // keeps track of what happens when the game starts
   const initializeGame = () => {
@@ -65,6 +66,36 @@ function App() {
     });
 
     setCards(newCards);
+
+    const newFlippedCards = [...flippedCards, card.id];
+    setFlippedCards(newFlippedCards);
+
+    // check for a match if two cards are flipped
+    if (flippedCards.length === 1) {
+      const firstCard = cards[flippedCards[0]];
+
+      if (firstCard.value === card.value) {
+        alert("It's a match!");
+      }
+      else {
+        //flip back card 1, card 2
+
+        // delay of 1 second before flipping back
+        setTimeout(() => {
+        const flippedBackCard = newCards.map((c) => {
+          if (newFlippedCards.includes(c.id) || c.id === card.id) {
+            return {...c, isFlipped: false};
+          }
+          else {
+            return c;
+          }
+        });
+
+        setCards(flippedBackCard)
+        setFlippedCards([]);
+        }, 1000)
+      }
+    }
   };
 
   return  (
